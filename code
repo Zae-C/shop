@@ -1,0 +1,137 @@
+#include<iostream>
+#include<string>
+#include<stdlib.h>
+using namespace std;
+string inventory[5];
+string battleitems[2] = { "health potion", "smoke bomb" };
+void Shop();
+int invenum[5] = { 0,0,0,0,0 };
+double $ = 0;
+double hp = 100;
+bool fire = false;
+bool sharpness = false;
+bool ad = false;
+char input;
+int room = 1;
+int main() {
+	srand(time(NULL));
+	cout << "Shop Test" << endl;
+	do { //game loop
+		switch (room) {
+		case 1: // room 1!
+			$ = 5000;
+			Shop();
+		}
+	} while ($ >= 0 || $ != 0);
+	cout << "Test over" << endl;
+}
+
+void Shop() {
+	cout << "Here's your inventory:" << endl;
+	for (int i = 0; i < 5; i++) {
+		if (invenum[i] != 0)
+			cout << inventory[i] << ": " << invenum[i] << endl;
+	}
+	cout << "Here's your amount of money: " << $ << endl;
+	cout << "Click any key to continue or 'q' to quit." << endl;
+	cin >> input;
+	if ($ > 0) {
+		cout << "Would you like to go to the shop? Click any key to continue or 'y' to go to shop." << endl;
+		cin >> input;
+		if (input == 'y') {
+			cout << "Would you like to buy(b) or sell(s)?" << endl;
+			cin >> input;
+			if (input == 'b') {
+				cout << "What would you like to buy?" << endl;
+				cout << "5 Health Potions(h)-$10" << endl;
+				cout << "5 Smoke Bombs(s)-$10" << endl;
+				cout << "Fire Enchant(f)-$250" << endl;
+				cout << "Sharpness Enchant(e)-$250" << endl;
+				cout << "Interesting Key(k)-$500" << endl;
+				cout << " 500 additional Health(a)-$1000" << endl << endl;
+				cin >> input;
+				if (input == 's' && $ >= 10) {
+					cout << "You have acquired 5 Smoke Bombs!" << endl << endl;
+					inventory[1] = "Smoke Bombs";
+					invenum[1] += 5;
+					$ -= 10;
+				}
+				else if (input == 's' && $ < 10) {
+					cout << "You don't have enough money." << endl << endl;
+				}
+				else if (input == 'h' && $ >= 5) {
+					cout << "You have acquired 5 health potions!" << endl << endl;
+					inventory[0] = "Health Potion";
+					invenum[0] += 5;
+					$ -= 5;
+				}
+				else if (input == 'h' && $ < 5) {
+					cout << "You don't have enough money." << endl << endl;
+				}
+				else if (input == 'f' && $ >= 250) {
+					cout << "You have acquired the Fire Enchantment!" << endl << endl;
+					fire = true;
+					$ -= 250;
+				}
+				else if (input == 'f' && $ < 250) {
+					cout << "You don't have enough money." << endl << endl;
+				}
+				else if (input == 'e' && $ >= 250) {
+					cout << "You have aquired the Sharpness Enchantment!" << endl << endl;
+					sharpness = true;
+					$ -= 250;
+				}
+				else if (input == 'e' && $ < 250) {
+					cout << "You don't have enough money." << endl << endl;
+				}
+				else if (input == 'k' && $ >= 500) {
+					cout << "You have acquired an Interesting Key!" << endl << endl;
+					inventory[2] = "Interesting Key";
+					invenum[2] += 1;
+					$ -= 500;
+				}
+				else if (input == 'k' && $ < 500) {
+					cout << "You don't have enough money." << endl << endl;
+				}
+				else if (input == 'a' && $ >= 1000) {
+					cout << "You have acquired an Additional 500 HP!" << endl << endl;
+					ad == true;
+					hp += 500;
+					$ -= 20;
+				}
+				else if (input == 'a' && $ < 1000) {
+					cout << "You don't have enough money." << endl << endl;
+				}
+			}
+			else if (input == 's') {
+				cout << "What would you like to sell?" << endl;
+				for (int i = 0; i < 5; i++) {
+					if (invenum[i] != 0)
+						cout << inventory[i] << ": " << invenum[i] << endl;
+				}
+				cout << "5 Health Potions(h)-10 coins." << endl;
+				cout << "5 Smoke Bombs(s)-10 coins." << endl;
+				cout << "A Rare Gem(g)-100 coins." << endl;
+				cin >> input;
+				if (invenum[0] > 5 && input == 'h') {
+					cout << "You have sold 5 Health Potion!" << endl;
+					inventory[0] = "Health Potion";
+					invenum[0] -= 5;
+					$ += 10;
+				}
+				if (invenum[1] > 5 && input == 's') {
+					cout << "You have sold 5 Smoke Bombs!" << endl;
+					inventory[1] = "Smoke Bombs";
+					invenum[1] -= 5;
+					$ += 10;
+				}
+				else if (invenum[3] > 0 && input == 'g') {
+					cout << "You have sold a Rare Gem!" << endl;
+					inventory[3] = "Rare Gem";
+					invenum[3] -= 5;
+					$ += 100;
+				}
+			}
+		}
+	}
+}
